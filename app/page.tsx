@@ -1,12 +1,12 @@
 import { Mic, MessageSquare, Volume2, Zap, Moon, Globe, PenTool, ArrowRight } from "lucide-react";
 import { Button } from "./components/ui/button";
 import Link from "next/link";
-import { Navbar } from "./components/navbar";
+
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-      <Navbar />
+      
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 className="text-6xl font-bold tracking-tight">
@@ -20,18 +20,20 @@ export default function Home() {
         </p>
 
         {/* Wrap the Button with Link */}
-        <Link href="/get-started">
-          <Button className="mt-8 mb-4 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-5 text-lg rounded-full">
-            Start Speaking Now
-          </Button>
-        </Link>
+       {/* Wrap the Button with Link */}
+<Link href="/get-started" passHref>
+  <Button className="mt-8 mb-4 inline-flex items-center gap-2 border rounded-full px-6 py-5 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white text-lg transition">
+    Start Speaking Now
+  </Button>
+</Link>
 
-        {/* Product Hunt Badge */}
-        <div className="mt-8 inline-flex items-center gap-2 border rounded-full px-4 py-2 bg-white">
-          <span className="text-yellow-500">🏆</span>
-          <span className="text-gray-500">SELF-ACCLAIMED</span>
-          <span className="text-[#FF7B5F]">#1 Product of the Day</span>
-        </div>
+{/* Product Hunt Badge */}
+<Link href="/chat-bot" passHref>
+  <button className="mt-8 inline-flex items-center gap-2 border rounded-full px-6 py-5 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white text-lg transition">
+    <span className="text-yellow-500">🏆</span>
+    <span className="font-semibold">Consult with AI</span>
+  </button>
+</Link>
 
         {/* Features Grid */}
         <div className="mt-20 grid md:grid-cols-3 gap-8">

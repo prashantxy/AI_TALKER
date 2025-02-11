@@ -1,12 +1,12 @@
 "use client"
-import { Navbar } from "../components/navbar";
+
 import { SiteFooter } from "../components/side-footer";
 import { useState } from "react";
 
 export default function FAQPage() {
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-      <Navbar />
+      
       <main className="max-w-3xl mx-auto px-6 py-20">
         <h1 className="text-5xl font-bold text-center mb-16">
           Frequently Asked <span className="text-[#FF7B5F]">Questions</span>

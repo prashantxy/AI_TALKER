@@ -1,3 +1,4 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,6 +25,12 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 12 100% 68%;
     --radius: 0.75rem;
+
+    /* Fallback colors */
+    --background-light: #f5f5f5;
+    --foreground-light: #333;
+    --background-dark: #333;
+    --foreground-dark: #f5f5f5;
   }
 
   .dark {
@@ -49,3 +56,34 @@
   }
 }
 
+/* Body and background color based on theme */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  background-color: var(--background-light);
+  color: var(--foreground-light);
+}
+
+html.dark body {
+  background-color: var(--background-dark);
+  color: var(--foreground-dark);
+}
+
+/* Tailwind dark mode utility classes */
+.bg-white {
+  background-color: var(--background-light);
+}
+
+.bg-gray-800 {
+  background-color: var(--background-dark);
+}
+
+.text-gray-800 {
+  color: var(--foreground-light);
+}
+
+.text-white {
+  color: var(--foreground-dark);
+}

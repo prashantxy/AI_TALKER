@@ -77,11 +77,11 @@ export function Navbar() {
           ))}
         </div>
         <div className="mt-6">
-          <Button 
-            className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-4 text-lg rounded-full w-full"
-          >
-            Connect
-          </Button>
+        <Link href="/support">
+      <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-4 text-lg rounded-full w-full">
+         Connect
+       </Button>
+      </Link>
         </div>
       </div>
     </header>

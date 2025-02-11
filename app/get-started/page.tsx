@@ -1,7 +1,7 @@
 "use client";  // Ensure this is at the top
 
 import { useState, useEffect } from "react";
-import { Navbar } from "../components/navbar";
+
 import { SiteFooter } from "../components/side-footer";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
@@ -72,7 +72,7 @@ export default function GetStartedContent() {
 
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-      <Navbar />
+     
       <main className="max-w-4xl mx-auto px-6 py-20">
         <h1 className="text-5xl font-bold text-center mb-16">
           Get Started with <span className="text-[#FF7B5F]">Voice AI</span>

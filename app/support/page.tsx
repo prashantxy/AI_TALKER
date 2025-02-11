@@ -1,5 +1,5 @@
 "use client"
-import { SiteHeader } from "../components/side-header"
+import { Navbar } from "../components/navbar"
 import { SiteFooter } from "../components/side-footer"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
@@ -14,7 +14,7 @@ export default function SupportPage() {
 
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-      <SiteHeader />
+      <Navbar />
       <main className="max-w-7xl mx-auto px-6 py-20">
         <h1 className="text-5xl font-bold text-center mb-16">
           Need <span className="text-[#FF7B5F]">Help?</span>

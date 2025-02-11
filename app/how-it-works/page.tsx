@@ -1,10 +1,10 @@
-import { SiteHeader } from "../components/side-header"
+import { Navbar } from "../components/navbar"
 import { SiteFooter } from "../components/side-footer"
 
 export default function HowItWorksPage() {
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-      <SiteHeader />
+      <Navbar />
       <main className="max-w-7xl mx-auto px-6 py-20">
         <h1 className="text-5xl font-bold text-center mb-16">
           How <span className="text-[#FF7B5F]">Voice AI</span> Works

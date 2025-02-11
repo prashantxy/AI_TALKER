@@ -52,13 +52,13 @@ export function SiteFooter() {
           <div>
             <h3 className="font-semibold mb-4">Connect</h3>
             <div className="flex space-x-4">
-              <Link href="https://twitter.com" className="text-gray-600 hover:text-[#FF7B5F]">
+              <Link href="https://x.com/pdubey1924" className="text-gray-600 hover:text-[#FF7B5F]">
                 <Twitter className="h-5 w-5" />
               </Link>
-              <Link href="https://github.com" className="text-gray-600 hover:text-[#FF7B5F]">
+              <Link href="https://github.com/prashantxy/AI_TALKER" className="text-gray-600 hover:text-[#FF7B5F]">
                 <Github className="h-5 w-5" />
               </Link>
-              <Link href="https://linkedin.com" className="text-gray-600 hover:text-[#FF7B5F]">
+              <Link href="https://www.linkedin.com/in/prashant-dubey-59826521b/" className="text-gray-600 hover:text-[#FF7B5F]">
                 <Linkedin className="h-5 w-5" />
               </Link>
             </div>

@@ -1,26 +1,12 @@
-import { Mic, MessageSquare, Volume2, Zap, Moon, Globe } from "lucide-react";
+import { Mic, MessageSquare, Volume2, Zap, Moon, Globe, PenTool, ArrowRight } from "lucide-react";
 import { Button } from "./components/ui/button";
 import Link from "next/link";
+import { Navbar } from "./components/navbar";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-      {/* Navigation */}
-      <nav className="flex items-center justify-between p-6 max-w-7xl mx-auto">
-        <div className="flex items-center gap-2">
-          <Volume2 className="h-8 w-8 text-[#FF7B5F]" />
-          <span className="font-semibold text-xl">Voice AI</span>
-        </div>
-        <div className="hidden md:flex items-center gap-8 text-gray-600">
-          <a href="/features">Features</a>
-          <a href="/how-it-works">How it works</a>
-          <a href="/">Blogs</a>
-          <a href="/faq">FAQ</a>
-          <a href="/support">Support</a>
-        </div>
-        <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-4 text-lg rounded-full">Connect</Button>
-      </nav>
-
+      <Navbar />
       {/* Hero Section */}
       <main className="max-w-7xl mx-auto px-6 py-20 text-center">
         <h1 className="text-6xl font-bold tracking-tight">
@@ -32,7 +18,7 @@ export default function Home() {
           Empowering communication for throat patients through AI-powered voice assistance. Type or select, and let our
           natural voice speak for you.
         </p>
-        
+
         {/* Wrap the Button with Link */}
         <Link href="/get-started">
           <Button className="mt-8 mb-4 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-5 text-lg rounded-full">
@@ -43,7 +29,7 @@ export default function Home() {
         {/* Product Hunt Badge */}
         <div className="mt-8 inline-flex items-center gap-2 border rounded-full px-4 py-2 bg-white">
           <span className="text-yellow-500">🏆</span>
-          <span className="text-gray-500">PRODUCT HUNT</span>
+          <span className="text-gray-500">SELF-ACCLAIMED</span>
           <span className="text-[#FF7B5F]">#1 Product of the Day</span>
         </div>
 
@@ -115,6 +101,39 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        {/* Share Your Voice Section */}
+        <section className="max-w-7xl mx-auto px-6 py-20 text-center">
+          <h2 className="text-4xl font-bold tracking-tight mb-6">
+            Share Your <span className="text-[#FF7B5F]">Voice</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-12">
+            Express yourself through writing. Share your experiences, tips, and stories with our community.
+          </p>
+
+          <Link href="/create-blog">
+            <Button className="mb-12 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-3 text-lg rounded-full">
+              <PenTool className="mr-2 h-5 w-5" />
+              Write a Blog Post
+            </Button>
+          </Link>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[{ title: "My Journey with Voice AI", excerpt: "How Voice AI transformed my daily communication and gave me back my voice.", author: "John Doe", date: "May 15, 2023" }, { title: "5 Tips for Effective Communication", excerpt: "Discover how to make the most of Voice AI features for clear and impactful communication.", author: "Jane Smith", date: "May 10, 2023" }, { title: "Voice AI in Healthcare", excerpt: "Exploring the impact of Voice AI technology in modern healthcare settings.", author: "Dr. Emily Johnson", date: "May 5, 2023" }].map((post, index) => (
+              <div key={index} className="bg-white rounded-xl shadow-sm p-6 text-left">
+                <h3 className="text-xl font-semibold mb-2">{post.title}</h3>
+                <p className="text-gray-600 mb-4">{post.excerpt}</p>
+                <div className="flex justify-between items-center text-sm text-gray-500">
+                  <span>{post.author}</span>
+                  <span>{post.date}</span>
+                </div>
+                <Link href={`/blog/${index + 1}`} className="mt-4 text-[#FF7B5F] flex items-center">
+                  Read More <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   );

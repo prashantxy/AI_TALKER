@@ -1,16 +1,17 @@
+"use client"
 import React from "react";
 
 interface SelectProps {
-  children: React.ReactNode;
+  value: string;
   onValueChange: (value: string) => void;
-  defaultValue: string;
+  children: React.ReactNode;
 }
 
-export const Select: React.FC<SelectProps> = ({ children, onValueChange, defaultValue }) => {
+export const Select: React.FC<SelectProps> = ({ value, onValueChange, children }) => {
   return (
     <div className="relative">
       <select
-        value={defaultValue}
+        value={value}
         onChange={(e) => onValueChange(e.target.value)}
         className="block w-full p-2 border rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-[#FF7B5F] cursor-pointer"
       >
@@ -25,15 +26,15 @@ interface SelectTriggerProps {
 }
 
 export const SelectTrigger: React.FC<SelectTriggerProps> = ({ children }) => {
-  return <div>{children}</div>;
+  return <div className="p-2 border rounded-md cursor-pointer">{children}</div>;
 };
 
 interface SelectValueProps {
-  placeholder: string;
+  value: string;
 }
 
-export const SelectValue: React.FC<SelectValueProps> = ({ placeholder }) => {
-  return <span>{placeholder}</span>;
+export const SelectValue: React.FC<SelectValueProps> = ({ value }) => {
+  return <span>{value || "Select an option"}</span>;
 };
 
 interface SelectContentProps {
@@ -41,7 +42,7 @@ interface SelectContentProps {
 }
 
 export const SelectContent: React.FC<SelectContentProps> = ({ children }) => {
-  return <div>{children}</div>;
+  return <div className="absolute mt-1 w-full bg-white border rounded-md shadow-md">{children}</div>;
 };
 
 interface SelectItemProps {

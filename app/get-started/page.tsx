@@ -1,6 +1,6 @@
-"use client";  // Keep this at the top!
+"use client";  // Ensure this is at the top
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "../components/navbar";
 import { SiteFooter } from "../components/side-footer";
 import { Button } from "../components/ui/button";
@@ -17,16 +17,33 @@ import { Volume2, Pause, Play } from "lucide-react";
 
 export default function GetStartedContent() {
   const [text, setText] = useState("");
-  const [voice, setVoice] = useState("en-US-1");
   const [speed, setSpeed] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<string>("");
+
+  // Load available voices
+  useEffect(() => {
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+      if (availableVoices.length > 0) {
+        setSelectedVoice(availableVoices[0].name); // Default to the first voice
+      }
+    };
+
+    loadVoices();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+      speechSynthesis.onvoiceschanged = loadVoices;
+    }
+  }, []);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
 
   const handleVoiceChange = (value: string) => {
-    setVoice(value);
+    setSelectedVoice(value);
   };
 
   const handleSpeedChange = (value: number) => {
@@ -34,10 +51,23 @@ export default function GetStartedContent() {
   };
 
   const handlePlay = () => {
-    setIsPlaying(true);
-    setTimeout(() => {
+    if (!text.trim()) return;
+
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Find and apply the selected voice
+    const voice = voices.find(v => v.name === selectedVoice);
+    if (voice) utterance.voice = voice;
+
+    utterance.rate = speed; // Set playback speed
+
+    utterance.onend = () => {
       setIsPlaying(false);
-    }, 3000);
+    };
+
+    setIsPlaying(true);
+    synth.speak(utterance);
   };
 
   return (
@@ -49,6 +79,7 @@ export default function GetStartedContent() {
         </h1>
 
         <div className="bg-white rounded-xl shadow-sm p-8">
+          {/* Text Input */}
           <div className="mb-6">
             <label className="block text-sm font-medium mb-2">Enter your text</label>
             <Textarea
@@ -59,21 +90,26 @@ export default function GetStartedContent() {
             />
           </div>
 
+          {/* Voice & Speed Selection */}
           <div className="grid grid-cols-2 gap-6 mb-6">
+            {/* Voice Selection */}
             <div>
               <label className="block text-sm font-medium mb-2">Choose a voice</label>
-              <Select onValueChange={handleVoiceChange} defaultValue={voice}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a voice" />
+              <Select onValueChange={handleVoiceChange} value={selectedVoice}>
+                <SelectTrigger children={undefined}>
+                 
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="en-US-1">English (US) - Female</SelectItem>
-                  <SelectItem value="en-US-2">English (US) - Male</SelectItem>
-                  <SelectItem value="es-ES-1">Spanish - Female</SelectItem>
-                  <SelectItem value="fr-FR-1">French - Male</SelectItem>
+                  {voices.map((voice) => (
+                    <SelectItem key={voice.name} value={voice.name}>
+                      {voice.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
+
+            {/* Speed Selection */}
             <div>
               <label className="block text-sm font-medium mb-2">Adjust speed</label>
               <Slider 
@@ -89,6 +125,7 @@ export default function GetStartedContent() {
             </div>
           </div>
 
+          {/* Play Button */}
           <Button
             className="w-full bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white"
             onClick={handlePlay}
@@ -105,6 +142,7 @@ export default function GetStartedContent() {
             )}
           </Button>
 
+          {/* Audio Icon While Speaking */}
           {isPlaying && (
             <div className="mt-4 flex items-center justify-center text-[#FF7B5F]">
               <Volume2 className="animate-pulse h-8 w-8" />

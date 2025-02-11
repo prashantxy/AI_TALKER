@@ -111,7 +111,7 @@ export default function Home() {
             Express yourself through writing. Share your experiences, tips, and stories with our community.
           </p>
 
-          <Link href="/create-blog">
+          <Link href="/blog/create">
           <Button className="mb-12 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-3 text-lg rounded-full flex items-center justify-center">
             <PenTool className="mr-2 h-5 w-5" />
               Write a Blog Post

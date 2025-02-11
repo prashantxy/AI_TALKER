@@ -6,6 +6,7 @@ import { PenTool } from "lucide-react"
 import blogs from "../data/blog.json"
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react"
 import { Navbar } from "../components/navbar"
+import { SiteFooter } from "../components/side-footer"
 
 export default function BlogPage() {
   return (
@@ -39,6 +40,7 @@ export default function BlogPage() {
           ))}
         </div>
       </main>
+       <SiteFooter/>
     </div>
   )
 }

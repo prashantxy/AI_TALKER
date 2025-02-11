@@ -5,6 +5,7 @@ import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
 import { Navbar } from "@/app/components/navbar"
+import { SiteFooter } from "@/app/components/side-footer"
 
 export default function CreateBlogPost() {
   const [title, setTitle] = useState("")
@@ -51,6 +52,7 @@ export default function CreateBlogPost() {
           </Button>
         </form>
       </main>
+      <SiteFooter/>
     </div>
   )
 }

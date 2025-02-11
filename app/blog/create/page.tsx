@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Button } from "../../components/ui/button"
 import { Input } from "../../components/ui/input"
 import { Textarea } from "../../components/ui/textarea"
-import { Navbar } from "@/app/components/navbar"
+
 import { SiteFooter } from "@/app/components/side-footer"
 
 export default function CreateBlogPost() {
@@ -23,7 +23,7 @@ export default function CreateBlogPost() {
 
   return (
     <div className="min-h-screen bg-[#FFF8F6] py-12">
-        <Navbar />
+        
       <main className="max-w-3xl mx-auto px-6">
         <h1 className="text-4xl font-bold mb-8 text-center">
           Create a New <span className="text-[#FF7B5F]">Blog Post</span>

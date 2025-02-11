@@ -12,11 +12,11 @@ export function SiteHeader() {
       <div className="hidden md:flex items-center gap-8 text-gray-600">
         <Link href="/features">Features</Link>
         <Link href="/how-it-works">How it works</Link>
-        <Link href="/blog">Blog</Link>
+        <Link href="/">Blog</Link>
         <Link href="/faq">FAQ</Link>
         <Link href="/support">Support</Link>
       </div>
-      <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white">Try for Free</Button>
+      <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-4 text-lg rounded-full">Connect</Button>
     </nav>
   )
 }

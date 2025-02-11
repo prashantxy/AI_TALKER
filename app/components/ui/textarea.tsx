@@ -1,13 +1,13 @@
 "use client"
-import React from "react";
-interface TextAreaProps {
-  value: string;
-  onChange: (value: string) => void; // Expects a string, not the event
+import React from "react";  
+interface TextAreaProps { 
+  value: string; 
+  onChange: (value: string) => void; 
   placeholder?: string;
   rows?: number;
-  cols?: number;
-  maxLength?: number;
-  className?: string;
+  cols?: number; 
+  maxLength?: number;   
+  className?: string; 
 }
 
 const TextArea: React.FC<TextAreaProps> = ({
@@ -19,7 +19,7 @@ const TextArea: React.FC<TextAreaProps> = ({
   maxLength,
   className = "",
 }) => {
-  // Extract the value from the event and pass it to onChange
+  
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     onChange(e.target.value); // Pass the value (string), not the event
   };

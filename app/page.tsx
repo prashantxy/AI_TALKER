@@ -112,10 +112,11 @@ export default function Home() {
           </p>
 
           <Link href="/create-blog">
-            <Button className="mb-12 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-3 text-lg rounded-full">
-              <PenTool className="mr-2 h-5 w-5" />
+          <Button className="mb-12 bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-3 text-lg rounded-full flex items-center justify-center">
+            <PenTool className="mr-2 h-5 w-5" />
               Write a Blog Post
-            </Button>
+             </Button>
+
           </Link>
 
           <div className="grid md:grid-cols-3 gap-8">
@@ -127,7 +128,7 @@ export default function Home() {
                   <span>{post.author}</span>
                   <span>{post.date}</span>
                 </div>
-                <Link href={`/blog/${index + 1}`} className="mt-4 text-[#FF7B5F] flex items-center">
+                <Link href="/blog" className="mt-4 text-[#FF7B5F] flex items-center">
                   Read More <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </div>

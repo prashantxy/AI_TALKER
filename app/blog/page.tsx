@@ -18,10 +18,11 @@ export default function BlogPage() {
         </h1>
         <div className="text-center mb-12">
           <Link href="/blog/create">
-            <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-3 text-lg rounded-full">
-              <PenTool className="mr-2 h-5 w-5" />
-              Write a New Blog Post
-            </Button>
+          <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-4 py-2 text-base rounded-full">
+           <PenTool className="mr-2 h-4 w-4" />
+               Write a New Blog Post
+             </Button>
+
           </Link>
         </div>
         <div className="grid md:grid-cols-2 gap-8">
@@ -33,7 +34,7 @@ export default function BlogPage() {
                 <span>{post.author}</span>
                 <span>{new Date(post.date).toLocaleDateString()}</span>
               </div>
-              <Link href={`/blog/${post.id}`} className="text-[#FF7B5F] hover:underline">
+              <Link href="/blog" className="text-[#FF7B5F] hover:underline">
                 Read More
               </Link>
             </div>

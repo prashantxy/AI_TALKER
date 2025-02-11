@@ -24,9 +24,7 @@ export function SiteFooter() {
               <li>
                 <Link href="/how-it-works">How it works</Link>
               </li>
-              <li>
-                <Link href="/pricing">Pricing</Link>
-              </li>
+              
               <li>
                 <Link href="/faq">FAQ</Link>
               </li>
@@ -42,10 +40,10 @@ export function SiteFooter() {
                 <Link href="/support">Support</Link>
               </li>
               <li>
-                <Link href="/documentation">Documentation</Link>
+                <Link href="/">Documentation</Link>
               </li>
               <li>
-                <Link href="/privacy">Privacy Policy</Link>
+                <Link href="/">Privacy Policy</Link>
               </li>
             </ul>
           </div>

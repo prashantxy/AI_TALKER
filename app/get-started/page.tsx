@@ -97,7 +97,7 @@ export default function GetStartedContent() {
               <label className="block text-sm font-medium mb-2">Choose a voice</label>
               <Select onValueChange={handleVoiceChange} value={selectedVoice}>
                 <SelectTrigger children={undefined}>
-                 
+                  
                 </SelectTrigger>
                 <SelectContent>
                   {voices.map((voice) => (

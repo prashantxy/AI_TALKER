@@ -19,7 +19,7 @@ export default function HowItWorksPage() {
                 <p className="text-gray-600">{step.description}</p>
               </div>
               <div className="flex-1 bg-white p-6 rounded-xl shadow-sm">
-                <img src={step.image || "/placeholder.svg"} alt={step.title} className="w-full rounded-lg" />
+               
               </div>
             </div>
           ))}
@@ -35,19 +35,19 @@ const steps = [
     title: "Type or Select Your Message",
     description:
       "Simply type your message or choose from pre-set quick responses. Our interface is designed to be intuitive and easy to use, even in urgent situations.",
-    image: "/placeholder.svg?height=300&width=400",
+    
   },
   {
     title: "Choose Your Voice Style",
     description:
       "Select from various voice styles or use your custom recorded voice. Adjust the tone and speed to match your preferences.",
-    image: "/placeholder.svg?height=300&width=400",
+    
   },
   {
     title: "Speak with Confidence",
     description:
       "Your message is converted to natural-sounding speech instantly. Communication becomes effortless and comfortable.",
-    image: "/placeholder.svg?height=300&width=400",
+   
   },
 ]
 

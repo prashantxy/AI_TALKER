@@ -1,40 +1,26 @@
 "use client"
-import React from "react";  
-interface TextAreaProps { 
-  value: string; 
-  onChange: (value: string) => void; 
-  placeholder?: string;
-  rows?: number;
-  cols?: number; 
-  maxLength?: number;   
-  className?: string; 
-}
 
-const TextArea: React.FC<TextAreaProps> = ({
-  value,
-  onChange,
-  placeholder = "Type here...",
-  rows = 4,
-  cols = 50,
-  maxLength,
-  className = "",
-}) => {
-  
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    onChange(e.target.value); // Pass the value (string), not the event
-  };
+import * as React from "react"
 
-  return (
-    <textarea
-      value={value}
-      onChange={handleChange} // Using handleChange to extract value
-      placeholder={placeholder}
-      rows={rows}
-      cols={cols}
-      maxLength={maxLength}
-      className={`resize-none border p-2 rounded-md w-full ${className}`}
-    />
-  );
-};
+import { cn } from "./lib/utils"
 
-export default TextArea;
+export interface TextareaProps
+  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ className, ...props }, ref) => {
+    return (
+      <textarea
+        className={cn(
+          "flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
+        )}
+        ref={ref}
+        {...props}
+      />
+    )
+  }
+)
+Textarea.displayName = "Textarea"
+
+export { Textarea }

@@ -1,11 +1,17 @@
+"use client"
 import { SiteHeader } from "../components/side-header"
 import { SiteFooter } from "../components/side-footer"
 import { Button } from "../components/ui/button"
 import { Input } from "../components/ui/input"
-import  Textarea  from "../components/ui/textarea"
+import  {Textarea}  from "../components/ui/textarea"
 import { MessageSquare, Mail, Phone } from "lucide-react"
+import { ChangeEvent } from "react"
 
 export default function SupportPage() {
+  function handleTextChange(event: ChangeEvent<HTMLTextAreaElement>): void {
+    throw new Error("Function not implemented.")
+  }
+
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
       <SiteHeader />
@@ -55,9 +61,8 @@ export default function SupportPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium mb-2">Message</label>
-                <Textarea placeholder="How can we help you?" className="h-32" value={""} onChange={function (value: string): void {
-                                  throw new Error("Function not implemented.")
-                              } } />
+                <Textarea placeholder="How can we help you?" className="h-32" value={""} 
+                 onChange={handleTextChange} />
               </div>
               <Button className="w-full bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white">Send Message</Button>
             </form>

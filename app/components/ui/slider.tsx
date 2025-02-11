@@ -1,18 +1,20 @@
+"use client";  // ✅ Add this at the top!
+
 import React from "react";
 
 interface SliderProps {
-  value: number; // For a single value. Can be adjusted for ranges.
-  onChange: (value: number) => void;
+  value: number;
+  onValueChange: (value: number) => void;
   min: number;
   max: number;
   step: number;
-  label: string;
+  label?: string;
   className?: string;
 }
 
 const Slider: React.FC<SliderProps> = ({
   value,
-  onChange,
+  onValueChange,
   min,
   max,
   step,
@@ -20,14 +22,16 @@ const Slider: React.FC<SliderProps> = ({
   className = "",
 }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(Number(e.target.value)); // Ensure value is passed as number
+    onValueChange(Number(e.target.value));
   };
 
   return (
     <div className={`flex flex-col ${className}`}>
-      <label htmlFor="slider" className="text-lg font-medium mb-2">
-        {label}
-      </label>
+      {label && (
+        <label htmlFor="slider" className="text-lg font-medium mb-2">
+          {label}
+        </label>
+      )}
       <input
         id="slider"
         type="range"
@@ -46,7 +50,7 @@ const Slider: React.FC<SliderProps> = ({
         <span>{min}</span>
         <span>{max}</span>
       </div>
-      <div className="mt-2 text-sm text-gray-600">Current value: {value}</div>
+      <div className="mt-2 text-sm text-gray-600">Current value: {value.toFixed(1)}</div>
     </div>
   );
 };

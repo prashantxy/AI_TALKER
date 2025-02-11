@@ -1,44 +1,44 @@
-"use client"
+"use client";  // Keep this at the top!
 
-import { useState } from "react"
-import { SiteHeader } from "../components/side-header"
-import { SiteFooter } from "../components/side-footer"
-import { Button } from "../components/ui/button"
-import  Textarea  from "../components/ui/textarea"
-import  {Select} from "../components/ui/select"
-import  {SelectTrigger} from "../components/ui/select"
-import  {SelectValue} from "../components/ui/select"
-import  {SelectItem} from "../components/ui/select"
-import  {SelectContent} from "../components/ui/select"
-import  Slider  from "../components/ui/slider"
-import { Volume2, Pause, Play } from "lucide-react"
+import { useState } from "react";
+import { SiteHeader } from "../components/side-header";
+import { SiteFooter } from "../components/side-footer";
+import { Button } from "../components/ui/button";
+import { Textarea } from "../components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import Slider from "../components/ui/slider";
+import { Volume2, Pause, Play } from "lucide-react";
 
-export default function GetStartedPage() {
-  const [text, setText] = useState("")
-  const [voice, setVoice] = useState("en-US-1")
-  const [speed, setSpeed] = useState(1)
-  const [isPlaying, setIsPlaying] = useState(false)
+export default function GetStartedContent() {
+  const [text, setText] = useState("");
+  const [voice, setVoice] = useState("en-US-1");
+  const [speed, setSpeed] = useState(1);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value)
-  }
+    setText(e.target.value);
+  };
 
   const handleVoiceChange = (value: string) => {
-    setVoice(value)
-  }
+    setVoice(value);
+  };
 
-  const handleSpeedChange = (value: number[]) => {
-    setSpeed(value[0])
-  }
+  const handleSpeedChange = (value: number) => {
+    setSpeed(value);
+  };
 
   const handlePlay = () => {
-    setIsPlaying(true)
-    // Here you would typically call your text-to-speech API
-    // For now, we'll just simulate it with a timeout
+    setIsPlaying(true);
     setTimeout(() => {
-      setIsPlaying(false)
-    }, 3000)
-  }
+      setIsPlaying(false);
+    }, 3000);
+  };
 
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
@@ -53,7 +53,7 @@ export default function GetStartedPage() {
             <label className="block text-sm font-medium mb-2">Enter your text</label>
             <Textarea
               placeholder="Type your message here..."
-              className="h-32"
+              className="h-32 resize-none"
               value={text}
               onChange={handleTextChange}
             />
@@ -76,8 +76,16 @@ export default function GetStartedPage() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Adjust speed</label>
-              <Slider min={0.5} max={2} step={0.1} value={[speed]} onValueChange={handleSpeedChange} />
-              <div className="text-sm text-gray-600 mt-2">Current speed: {speed.toFixed(1)}x</div>
+              <Slider 
+                min={0.5} 
+                max={2} 
+                step={0.1} 
+                value={speed}
+                onValueChange={handleSpeedChange} 
+              />
+              <div className="text-sm text-gray-600 mt-2">
+                Current speed: {speed.toFixed(1)}x
+              </div>
             </div>
           </div>
 
@@ -106,6 +114,5 @@ export default function GetStartedPage() {
       </main>
       <SiteFooter />
     </div>
-  )
+  );
 }
-

@@ -14,7 +14,7 @@ export default function Home() {
         <div className="hidden md:flex items-center gap-8 text-gray-600">
           <a href="/features">Features</a>
           <a href="/how-it-works">How it works</a>
-          <a href="/blog">Blogs</a>
+          <a href="/">Blogs</a>
           <a href="/faq">FAQ</a>
           <a href="/support">Support</a>
         </div>

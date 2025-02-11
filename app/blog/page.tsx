@@ -5,10 +5,12 @@ import { Button } from "../components/ui/button"
 import { PenTool } from "lucide-react"
 import blogs from "../data/blog.json"
 import { Key, ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from "react"
+import { Navbar } from "../components/navbar"
 
 export default function BlogPage() {
   return (
     <div className="min-h-screen bg-[#FFF8F6] py-12">
+        <Navbar />
       <main className="max-w-7xl mx-auto px-6">
         <h1 className="text-4xl font-bold mb-8 text-center">
           <span className="text-[#FF7B5F]">Voice AI</span> Blog

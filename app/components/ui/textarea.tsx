@@ -1,5 +1,5 @@
+"use client"
 import React from "react";
-
 interface TextAreaProps {
   value: string;
   onChange: (value: string) => void; // Expects a string, not the event

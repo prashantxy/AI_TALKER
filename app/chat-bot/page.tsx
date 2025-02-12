@@ -1,10 +1,9 @@
-"use client";
+"use client"
 
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/card";
 import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 // Initialize Gemini API with environment variable
@@ -15,10 +14,36 @@ if (!API_KEY) {
 
 const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
+// TypeWriter Component
+interface TypeWriterProps {
+  text: string;
+  onComplete?: () => void;
+}
+
+const TypeWriter: React.FC<TypeWriterProps> = ({ text, onComplete }) => {
+  const [displayText, setDisplayText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
+      }, 30);
+
+      return () => clearTimeout(timer);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [currentIndex, text, onComplete]);
+
+  return <div className="whitespace-pre-wrap">{displayText}</div>;
+};
 
 interface Message {
   role: "user" | "assistant";
   content: string;
+  isTyping?: boolean;
 }
 
 export default function GeminiChat() {
@@ -27,7 +52,6 @@ export default function GeminiChat() {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to the latest message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -61,17 +85,32 @@ export default function GeminiChat() {
       const result = await chat.sendMessage(userMessage);
       const text = await result.response.text();
 
-      // Add assistant's response
-      setMessages((prev) => [...prev, { role: "assistant", content: text }]);
+      // Add assistant's response with typing indicator
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: text, isTyping: true }
+      ]);
     } catch (error) {
       console.error("Error:", error);
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: "I encountered an error. Please try again." }
+        { 
+          role: "assistant", 
+          content: "I encountered an error. Please try again.",
+          isTyping: true 
+        }
       ]);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleTypingComplete = (index: number) => {
+    setMessages((prev) =>
+      prev.map((msg, i) =>
+        i === index ? { ...msg, isTyping: false } : msg
+      )
+    );
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -83,9 +122,7 @@ export default function GeminiChat() {
 
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-     
       <main className="max-w-4xl mx-auto px-6 py-12">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold tracking-tight">
             <span className="text-[#FF7B5F]">Gemini</span> Chat Assistant
@@ -95,9 +132,7 @@ export default function GeminiChat() {
           </p>
         </div>
 
-        {/* Chat Container */}
         <Card className="bg-white rounded-xl shadow-sm p-4 mb-4 h-[600px] flex flex-col">
-          {/* Messages Area */}
           <div className="flex-1 overflow-y-auto space-y-4 p-4">
             {messages.map((message, index) => (
               <div
@@ -116,7 +151,14 @@ export default function GeminiChat() {
                 <div className={`max-w-[80%] rounded-lg p-3 ${
                   message.role === "user" ? "bg-[#FF7B5F] text-white" : "bg-gray-100 text-gray-800"
                 }`}>
-                  {message.content}
+                  {message.role === "assistant" && message.isTyping ? (
+                    <TypeWriter 
+                      text={message.content}
+                      onComplete={() => handleTypingComplete(index)}
+                    />
+                  ) : (
+                    message.content
+                  )}
                 </div>
               </div>
             ))}
@@ -133,7 +175,6 @@ export default function GeminiChat() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
           <div className="border-t pt-4 px-4">
             <div className="flex gap-2">
               <textarea
@@ -160,9 +201,9 @@ export default function GeminiChat() {
           </div>
         </Card>
 
-        {/* Features */}
         <div className="grid md:grid-cols-3 gap-6 mt-8">
-          {[{ icon: <Sparkles className="h-6 w-6 text-[#FF7B5F]" />, title: "AI Powered", desc: "Advanced language model for natural conversations" },
+          {[
+            { icon: <Sparkles className="h-6 w-6 text-[#FF7B5F]" />, title: "AI Powered", desc: "Advanced language model for natural conversations" },
             { icon: <Bot className="h-6 w-6 text-[#FF7B5F]" />, title: "24/7 Available", desc: "Always ready to assist you with your queries" },
             { icon: <User className="h-6 w-6 text-[#FF7B5F]" />, title: "Personalized", desc: "Tailored responses based on your communication needs" }
           ].map((feature, index) => (

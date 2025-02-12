@@ -3,10 +3,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/card";
-import { Send, Bot, User, Sparkles, Loader2 } from "lucide-react";
+import { Send, Bot, User, Sparkles, Loader2, Square } from "lucide-react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Gemini API with environment variable
 const API_KEY = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 if (!API_KEY) {
   console.error("❌ Gemini API key is missing. Make sure it's set in .env.local.");
@@ -14,17 +13,24 @@ if (!API_KEY) {
 
 const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
-// TypeWriter Component
 interface TypeWriterProps {
   text: string;
   onComplete?: () => void;
+  stop?: boolean;
 }
 
-const TypeWriter: React.FC<TypeWriterProps> = ({ text, onComplete }) => {
+const TypeWriter: React.FC<TypeWriterProps> = ({ text, onComplete, stop }) => {
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    if (stop) {
+      setDisplayText(text);
+      setCurrentIndex(text.length);
+      if (onComplete) onComplete();
+      return;
+    }
+
     if (currentIndex < text.length) {
       const timer = setTimeout(() => {
         setDisplayText((prev) => prev + text[currentIndex]);
@@ -35,7 +41,7 @@ const TypeWriter: React.FC<TypeWriterProps> = ({ text, onComplete }) => {
     } else if (onComplete) {
       onComplete();
     }
-  }, [currentIndex, text, onComplete]);
+  }, [currentIndex, text, onComplete, stop]);
 
   return <div className="whitespace-pre-wrap">{displayText}</div>;
 };
@@ -50,20 +56,28 @@ export default function GeminiChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [stopTyping, setStopTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const handleStop = () => {
+    setStopTyping(true);
+    setIsGenerating(false);
+  };
+
   const handleSend = async () => {
-    if (!input.trim() || isLoading) return;
+    if (!input.trim() || isLoading || isGenerating) return;
 
     const userMessage = input.trim();
     setInput("");
     setIsLoading(true);
+    setIsGenerating(true);
+    setStopTyping(false);
 
-    // Add user message to state
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
 
     try {
@@ -71,7 +85,6 @@ export default function GeminiChat() {
 
       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
-      // Ensure the chat history starts with a user message
       const formattedHistory = [
         { role: "user", parts: [{ text: userMessage }] },
         ...messages
@@ -80,12 +93,9 @@ export default function GeminiChat() {
       ];
 
       const chat = model.startChat({ history: formattedHistory });
-
-      // Fetch response
       const result = await chat.sendMessage(userMessage);
       const text = await result.response.text();
 
-      // Add assistant's response with typing indicator
       setMessages((prev) => [
         ...prev,
         { role: "assistant", content: text, isTyping: true }
@@ -111,6 +121,8 @@ export default function GeminiChat() {
         i === index ? { ...msg, isTyping: false } : msg
       )
     );
+    setIsGenerating(false);
+    setStopTyping(false);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -155,6 +167,7 @@ export default function GeminiChat() {
                     <TypeWriter 
                       text={message.content}
                       onComplete={() => handleTypingComplete(index)}
+                      stop={stopTyping}
                     />
                   ) : (
                     message.content
@@ -184,19 +197,28 @@ export default function GeminiChat() {
                 placeholder="Type your message..."
                 rows={1}
                 className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF7B5F] resize-none"
-                disabled={isLoading}
+                disabled={isLoading || isGenerating}
               />
-              <Button 
-                onClick={handleSend}
-                className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white"
-                disabled={isLoading || !input.trim()}
-              >
-                {isLoading ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
-                )}
-              </Button>
+              {isGenerating ? (
+                <Button 
+                  onClick={handleStop}
+                  className="bg-red-500 hover:bg-red-600 text-white"
+                >
+                  <Square className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button 
+                  onClick={handleSend}
+                  className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white"
+                  disabled={isLoading || !input.trim() || isGenerating}
+                >
+                  {isLoading ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
+                </Button>
+              )}
             </div>
           </div>
         </Card>

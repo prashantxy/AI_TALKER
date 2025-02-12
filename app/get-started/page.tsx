@@ -1,7 +1,6 @@
-"use client";  // Ensure this is at the top
+"use client"; // Ensure this is at the top
 
 import { useState, useEffect } from "react";
-
 import { SiteFooter } from "../components/side-footer";
 import { Button } from "../components/ui/button";
 import { Textarea } from "../components/ui/textarea";
@@ -21,6 +20,7 @@ export default function GetStartedContent() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
+  const [emotion, setEmotion] = useState<string>("neutral"); // Default emotion
 
   // Load available voices
   useEffect(() => {
@@ -50,6 +50,10 @@ export default function GetStartedContent() {
     setSpeed(value);
   };
 
+  const handleEmotionChange = (value: string) => {
+    setEmotion(value);
+  };
+
   const handlePlay = () => {
     if (!text.trim()) return;
 
@@ -57,10 +61,34 @@ export default function GetStartedContent() {
     const utterance = new SpeechSynthesisUtterance(text);
 
     // Find and apply the selected voice
-    const voice = voices.find(v => v.name === selectedVoice);
+    const voice = voices.find((v) => v.name === selectedVoice);
     if (voice) utterance.voice = voice;
 
-    utterance.rate = speed; // Set playback speed
+    // Set playback speed
+    utterance.rate = speed;
+
+    // Apply emotion-based settings
+    switch (emotion) {
+      case "angry":
+        utterance.pitch = 1.5; // Higher pitch
+        utterance.rate = 1.5; // Faster rate
+        utterance.volume = 1; // Louder volume
+        break;
+      case "sad":
+        utterance.pitch = 0.5; // Lower pitch
+        utterance.rate = 0.8; // Slower rate
+        utterance.volume = 0.7; // Softer volume
+        break;
+      case "happy":
+        utterance.pitch = 1.2; // Slightly higher pitch
+        utterance.rate = 1.2; // Slightly faster rate
+        utterance.volume = 1; // Normal volume
+        break;
+      default: // Neutral
+        utterance.pitch = 1; // Default pitch
+        utterance.rate = 1; // Default rate
+        utterance.volume = 1; // Default volume
+    }
 
     utterance.onend = () => {
       setIsPlaying(false);
@@ -72,7 +100,6 @@ export default function GetStartedContent() {
 
   return (
     <div className="min-h-screen bg-[#FFF8F6]">
-     
       <main className="max-w-4xl mx-auto px-6 py-20">
         <h1 className="text-5xl font-bold text-center mb-16">
           Get Started with <span className="text-[#FF7B5F]">Voice AI</span>
@@ -81,7 +108,9 @@ export default function GetStartedContent() {
         <div className="bg-white rounded-xl shadow-sm p-8">
           {/* Text Input */}
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-2">Enter your text</label>
+            <label className="block text-sm font-medium mb-2">
+              Enter your text
+            </label>
             <Textarea
               placeholder="Type your message here..."
               className="h-32 resize-none"
@@ -94,10 +123,12 @@ export default function GetStartedContent() {
           <div className="grid grid-cols-2 gap-6 mb-6">
             {/* Voice Selection */}
             <div>
-              <label className="block text-sm font-medium mb-2">Choose a voice</label>
+              <label className="block text-sm font-medium mb-2">
+                Choose a voice
+              </label>
               <Select onValueChange={handleVoiceChange} value={selectedVoice}>
-                <SelectTrigger children={undefined}>
-                  
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a voice" />
                 </SelectTrigger>
                 <SelectContent>
                   {voices.map((voice) => (
@@ -111,18 +142,38 @@ export default function GetStartedContent() {
 
             {/* Speed Selection */}
             <div>
-              <label className="block text-sm font-medium mb-2">Adjust speed</label>
-              <Slider 
-                min={0.5} 
-                max={2} 
-                step={0.1} 
+              <label className="block text-sm font-medium mb-2">
+                Adjust speed
+              </label>
+              <Slider
+                min={0.5}
+                max={2}
+                step={0.1}
                 value={speed}
-                onValueChange={handleSpeedChange} 
+                onValueChange={handleSpeedChange}
               />
               <div className="text-sm text-gray-600 mt-2">
                 Current speed: {speed.toFixed(1)}x
               </div>
             </div>
+          </div>
+
+          {/* Emotion Selection */}
+          <div className="mb-6">
+            <label className="block text-sm font-medium mb-2">
+              Choose an emotion
+            </label>
+            <Select onValueChange={handleEmotionChange} value={emotion}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select an emotion" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="neutral">Neutral</SelectItem>
+                <SelectItem value="happy">Happy</SelectItem>
+                <SelectItem value="sad">Sad</SelectItem>
+                <SelectItem value="angry">Angry</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Play Button */}

@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Volume2, Menu, X } from "lucide-react"
 import { Button } from "./ui/button"
 import { useState } from "react"
+import {ArConnectButton} from "../components/arconnect"
 
 interface NavItem {
   href: string
@@ -54,11 +55,7 @@ export function Navbar() {
           ))}
 
           {/* Button */}
-          <Button 
-            className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-4 text-lg rounded-full hidden md:block"
-          >
-            Connect
-          </Button>
+         <ArConnectButton/>
         </div>
       </nav>
 
@@ -70,18 +67,14 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className="text-lg text-foreground hover:text-[#FF7B5F]"
-              onClick={() => setIsMenuOpen(false)} // Close menu when clicked
+              onClick={() => setIsMenuOpen(false)} 
             >
               {item.label}
             </Link>
           ))}
         </div>
         <div className="mt-6">
-          <Link href="/support">
-            <Button className="bg-[#FF7B5F] hover:bg-[#FF6B4F] text-white px-6 py-4 text-lg rounded-full w-full">
-              Connect
-            </Button>
-          </Link>
+        <ArConnectButton/>  
         </div>
       </div>
     </header>

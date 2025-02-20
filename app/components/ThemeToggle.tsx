@@ -31,7 +31,7 @@ const ThemeToggle: React.FC = () => {
     setIsDark((prev) => !prev);
   };
 
-  return (
+  return ( 
     <button
       onClick={toggleTheme}
       className="p-2 bg-[#FF7B5F] text-white rounded-full transition-all"

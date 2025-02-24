@@ -11,6 +11,8 @@ if (!API_KEY) {
   console.error("❌ Gemini API key is missing. Make sure it's set in .env.local.");
 }
 
+
+
 const genAI = API_KEY ? new GoogleGenerativeAI(API_KEY) : null;
 
 interface TypeWriterProps {
